@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AuthWrapper } from "@/components/Auth/AuthWrapper";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import {
   useVerifyOtpMutation,
 } from "@/slices/auth/auth";
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const [verifyOtp, { isLoading: isVerifying }] = useVerifyOtpMutation();
   const [requestOtp, { isLoading: isRequesting }] = useRequestOtpMutation();
   const [code, setCode] = useState("");
@@ -126,5 +126,13 @@ export default function VerifyEmailPage() {
         {error && <p className="text-red-500 text-center">{error}</p>}
       </form>
     </AuthWrapper>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

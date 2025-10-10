@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,39 +18,12 @@ import FilterSidebar, {
   FilterOptions,
 } from "@/components/Products/FilterSidebar";
 
-type AdaptedProduct = {
-  id: number;
-  title: string;
-  category: string;
-  price: string;
-  rating: number;
-  imageLocal: string;
-  isNew?: boolean;
-  created_at: string;
-};
-
-function adaptProduct(product: Product): AdaptedProduct {
-  return {
-    id: product.productId,
-    title: product.title || product.name || "Unknown Product",
-    category: product.category,
-    price: `N${(product.effective_price || 0).toLocaleString()}`,
-    rating: product.rating,
-    imageLocal:
-      product.images?.[0] || product.image_urls?.[0] || "/placeholder.jpg",
-    isNew:
-      new Date(product.created_at) >
-      new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // New if created in last 30 days
-    created_at: product.created_at,
-  };
-}
-
-export default function ProductsPage() {
+function ProductsPageContent() {
   const searchParams = useSearchParams();
   const categories = useSelector(
     (state: RootState) => state.categories.categories
   );
-  const { isLoading: categoriesLoading } = useGetCategoriesQuery(undefined, {
+  useGetCategoriesQuery(undefined, {
     skip: categories.length > 0,
   });
 
@@ -120,8 +94,6 @@ export default function ProductsPage() {
     setPage(1);
     setAllProducts([]);
   }, [searchParams]);
-
-  const totalProducts = data ? data.pagination.total : 0;
 
   // Products are already filtered and sorted by API
   const displayProducts = allProducts;
@@ -277,5 +249,13 @@ export default function ProductsPage() {
         ) : null}
       </div>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductsPageContent />
+    </Suspense>
   );
 }
