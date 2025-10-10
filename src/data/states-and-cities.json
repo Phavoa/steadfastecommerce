@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Lagos",
+    "cities": ["Lagos", "Ikeja", "Surulere"]
+  },
+  {
+    "name": "Abuja",
+    "cities": ["Abuja", "Wuse", "Maitama"]
+  }
+]
