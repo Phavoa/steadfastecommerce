@@ -33,9 +33,11 @@ import { CartPanel } from "@/components/cart/CartPanel";
 export default function Header({
   onCategoryClick,
   isProductPage = false,
+  showSearchbar = true,
 }: {
   onCategoryClick?: React.Dispatch<React.SetStateAction<boolean>>;
   isProductPage?: boolean;
+  showSearchbar?: boolean;
 }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -201,7 +203,7 @@ export default function Header({
             >
               <ShoppingBag size={18} />
             </button>
-            {cartCount > 0 && (
+            {isClient && cartCount > 0 && (
               <span className="absolute top-1 right-1 md:-top-1 md:-right-1 bg-[#E94B1C] md:bg-[#184193] text-white text-[10px] md:text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
                 {cartCount}
               </span>
@@ -226,34 +228,36 @@ export default function Header({
       </div>
 
       {/* mobile search */}
-      <form
-        onSubmit={onSearch}
-        className="mx-4 -mt-4 mb-2 md:hidden flex flex-1 items-center justify-center"
-        role="search"
-      >
-        <div className="w-full max-w-2xl">
-          <div className="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden">
-            <button
-              type="submit"
-              aria-label="Search"
-              className="px-4 py-3 bg-white hover:bg-gray-50 border-r border-gray-200"
-            >
-              <Search size={18} color="#99a1af" />
-            </button>
-            <input
-              aria-label="Search products"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="flex-1 px-4 py-3 text-sm placeholder-gray-400 outline-none"
-              placeholder="Search here ..."
-            />
+      {showSearchbar ? (
+        <form
+          onSubmit={onSearch}
+          className="mx-4 -mt-4 mb-2 md:hidden flex flex-1 items-center justify-center"
+          role="search"
+        >
+          <div className="w-full max-w-2xl">
+            <div className="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden">
+              <button
+                type="submit"
+                aria-label="Search"
+                className="px-4 py-3 bg-white hover:bg-gray-50 border-r border-gray-200"
+              >
+                <Search size={18} color="#99a1af" />
+              </button>
+              <input
+                aria-label="Search products"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="flex-1 px-4 py-3 text-sm placeholder-gray-400 outline-none"
+                placeholder="Search here ..."
+              />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      ) : null}
 
       {/* second row: nav categories */}
       {isProductPage ? null : (
-        <nav className="bg-white overflow-x-auto no-scrollbar -mt-2 relative z-[10]">
+        <nav className="hidden md:block bg-white overflow-x-auto no-scrollbar -mt-2 relative z-[10]">
           <div className="px-6 justify-between relative min-h-20">
             <ul className="absolute top-0 left-4 right-4 md:relative flex justify-start md:justify-center items-center gap-2 md:gap-6 py-3 text-sm text-gray-700">
               <button

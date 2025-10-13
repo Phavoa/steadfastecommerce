@@ -9,7 +9,7 @@ const Banner: React.FC = () => {
     <section
       role="region"
       aria-label="Promotional banner: Free delivery"
-      className="bg-[#F8F3F2] px-4 py-4 lg:py-8"
+      className="bg-[#F8F3F2] px-4 py-4 lg:py-8 hidden md:block"
     >
       <div className="mx-auto max-w-6xl">
         {/* Container that centers content and changes layout at md */}

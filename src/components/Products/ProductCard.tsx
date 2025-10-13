@@ -100,6 +100,7 @@ export default function ProductCard({
             src={(p.images && p.images[0]) || "/placeholder.jpg"}
             alt={p.title}
             fill
+            unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
             style={{ objectFit: "cover" }}
             className="rounded-lg"
@@ -108,7 +109,7 @@ export default function ProductCard({
       </div>
 
       <div className="relative mt-3 p-2">
-        <div className="flex items-center gap-1 mb-2">
+        {/* <div className="flex items-center gap-1 mb-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <svg
               key={i}
@@ -124,7 +125,7 @@ export default function ProductCard({
               />
             </svg>
           ))}
-        </div>
+        </div> */}
 
         <p className="text-[10px] text-[#184193] mb-1">{p.category}</p>
         <h3 className="text-sm text-gray-800 truncate mb-1">{p.title}</h3>
@@ -138,7 +139,7 @@ export default function ProductCard({
         </div>
 
         {/* Action buttons placed at the right, one top, one bottom */}
-        <div className="absolute top-0 right-2 h-full flex flex-col justify-between items-end px-1 z-10 py-2">
+        <div className="absolute top-0 right-1 h-full flex flex-col justify-between items-end px-1 z-10 py-2">
           {/* Top: wishlist */}
           <button
             onClick={(e) => {

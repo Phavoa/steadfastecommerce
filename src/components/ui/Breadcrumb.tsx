@@ -5,11 +5,16 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
+  className?: string;
 }
 
-export const Breadcrumb = ({ items }: BreadcrumbProps) => {
+export const Breadcrumb = ({ items, className }: BreadcrumbProps) => {
   return (
-    <nav className="flex items-center space-x-2 text-sm text-gray-600">
+    <nav
+      className={`flex items-center space-x-2 text-sm text-gray-600 ${
+        className || ""
+      }`}
+    >
       {items.map((item, index) => (
         <span key={index} className="flex items-center">
           {index > 0 && <span className="mx-2">/</span>}

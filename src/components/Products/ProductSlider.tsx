@@ -66,7 +66,7 @@ export default function ProductSlider({
             />
           </SwiperSlide>
         ))}
-        <div className="custom-pagination mt-4 flex justify-center mx-auto gap-1"></div>
+        {/* <div className="custom-pagination mt-4 flex justify-center mx-auto gap-1"></div> */}
       </Swiper>
     </section>
   );

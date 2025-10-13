@@ -81,6 +81,15 @@ export const authApiSlice = createApi({
         method: "PATCH",
       }),
     }),
+    verifyPadiCode: builder.query<
+      { success: boolean; message: string; data: unknown },
+      string
+    >({
+      query: (padiCode) => ({
+        url: `/api/payment/${padiCode}/verify-padi-code`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -93,4 +102,5 @@ export const {
   useResetPasswordMutation,
   useVerifyAccountMutation,
   useUpdateLastActiveMutation,
+  useVerifyPadiCodeQuery,
 } = authApiSlice;

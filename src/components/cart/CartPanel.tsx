@@ -64,6 +64,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                       alt={item.title}
                       width={110}
                       height={110}
+                      unoptimized
                       className="object-cover rounded-lg aspect-square"
                     />
                   </div>
@@ -145,7 +146,7 @@ export const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             </p>
             <Link
               href="/cart"
-              className="flex justify-center w-full bg-[#184193] text-white py-3 rounded-full font-medium mb-4"
+              className="flex justify-center w-full bg-[#E94B1C] text-white py-3 rounded-full font-medium mb-4"
             >
               View Cart
             </Link>

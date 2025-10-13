@@ -15,6 +15,7 @@ import screenReducer from "../../slices/screenSlice";
 import authSlice from "../../slices/authSlice";
 import categoriesSlice from "../../slices/categoriesSlice";
 import cartSlice from "../../slices/cartSlice";
+import verifiedPromoSlice from "../../slices/verifiedPromoSlice";
 
 const persistConfig = {
   key: "auth",
@@ -31,12 +32,21 @@ const cartPersistConfig = {
   storage,
 };
 
+const verifiedPromoPersistConfig = {
+  key: "verifiedPromo",
+  storage,
+};
+
 const persistedAuthReducer = persistReducer(persistConfig, authSlice);
 const persistedCategoriesReducer = persistReducer(
   categoriesPersistConfig,
   categoriesSlice
 );
 const persistedCartReducer = persistReducer(cartPersistConfig, cartSlice);
+const persistedVerifiedPromoReducer = persistReducer(
+  verifiedPromoPersistConfig,
+  verifiedPromoSlice
+);
 
 export const store = configureStore({
   reducer: {
@@ -45,6 +55,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     categories: persistedCategoriesReducer,
     cart: persistedCartReducer,
+    verifiedPromo: persistedVerifiedPromoReducer,
     screen: screenReducer,
   },
   middleware: (getDefaultMiddleware) => {

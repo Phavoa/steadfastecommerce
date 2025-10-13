@@ -1,11 +1,15 @@
 // src/app/mobile-nav/page.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"; // Adjust if your shadcn path differs
+import { ShoppingCartIcon } from "lucide-react";
+import { useAppSelector } from "@/hooks/redux";
+import { selectCartItemCount } from "@/slices/cartSlice";
+import { CartPanel } from "@/components/cart/CartPanel";
 
-type TabKey = "home" | "category" | "search" | "account";
+type TabKey = "home" | "category" | "cart" | "account";
 
 const ACTIVE_COLOR = "#FF6A4C"; // coral / active tint closely matching the screenshot
 const INACTIVE_COLOR = "#111827"; // near-black
@@ -147,12 +151,28 @@ function NavItem({
 
 export default function MobileNav() {
   const [active, setActive] = useState<TabKey>("home");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const cartCount = useAppSelector(selectCartItemCount);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleClick = (id: TabKey) => {
     setActive(id);
     if (id === "home") {
       router.push("/");
+    } else if (id === "cart") {
+      router.push("/cart");
+    } else if (id === "account") {
+      if (isAuthenticated) {
+        router.push("/account/profile");
+      } else {
+        router.push("/auth/login");
+      }
     }
   };
 
@@ -178,30 +198,39 @@ export default function MobileNav() {
             id="category"
             label="Category"
             active={active === "category"}
-            onClick={() => router.push("/product")}
+            onClick={() => router.push("/products")}
           >
             <BagIcon active={active === "category"} />
           </NavItem>
 
           <NavItem
-            id="search"
-            label="Search"
-            active={active === "search"}
+            id="cart"
+            label="Cart"
+            active={active === "cart"}
             onClick={handleClick}
           >
-            <SearchIcon active={active === "search"} />
+            <div className="relative">
+              <ShoppingCartIcon size={24} />
+              {isClient && cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#E94B1C] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </div>
           </NavItem>
 
           <NavItem
             id="account"
             label="Account"
             active={active === "account"}
-            onClick={() => router.push("/account")}
+            onClick={handleClick}
           >
             <UserIcon active={active === "account"} />
           </NavItem>
         </div>
       </div>
+
+      <CartPanel isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </nav>
   );
 }
