@@ -41,9 +41,16 @@ export default function CheckoutPage() {
   const [fullTotal, setfullTotal] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedState, setSelectedState] = useState("");
-  let subtotal = 0;
+  const subtotal = 0;
   const [selectedCity, setSelectedCity] = useState("");
-  const [shippingDetails, setShippingDetails] = useState<unknown>(null);
+  const [shippingDetails, setShippingDetails] = useState<{
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    note?: string;
+  }>({});
   const [pickupData, setPickupData] = useState<{
     pickup?: string;
     zone?: ApiZone | null;
@@ -88,8 +95,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (padiVerificationData?.success) {
       const discountedTotal = 0.98 * subtotal;
-      subtotal = discountedTotal;
-      setfullTotal(subtotal);
+      setfullTotal(discountedTotal);
     }
   }, [padiVerificationData, subtotal]);
 
@@ -181,7 +187,7 @@ export default function CheckoutPage() {
                 pickupLocation={{
                   state: selectedState,
                   city: selectedCity,
-                  location: pickupData?.pickup,
+                  location: pickupData?.pickup || "",
                 }}
                 deliveryInfo={deliveryInfo}
               />

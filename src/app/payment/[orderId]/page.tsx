@@ -6,7 +6,54 @@ import Cookies from "js-cookie";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/hooks/useCart";
 
-type Order = any; // replace with a proper order type when available
+interface Order {
+  id: number;
+  order_id: string;
+  user_id: number;
+  status: string;
+  is_paid: boolean;
+  payment_status?: string;
+  amounts: {
+    delivery_fee: number;
+    discount: number;
+    subtotal: number;
+    tax: number;
+    total: number;
+  };
+  contact: {
+    email: string;
+    first_name: string;
+    last_name: string;
+    name: string;
+    phone: string;
+  };
+  shipping: {
+    address: string;
+    city: string;
+    state: string;
+  };
+  items: Array<{
+    line_total: number;
+    image_url: string;
+    product_id: number;
+    product_name: string;
+    quantity: number;
+    unit_price: number;
+    variation_id?: number | null;
+    variation_label?: string | null;
+  }>;
+  notes?: string | null;
+  created_at: string;
+  updated_at: string;
+  padicode?: string;
+  coupon_code?: string | null;
+  delivery?: {
+    duration?: string;
+    fee?: number;
+    pickup_location?: string;
+    zone_id?: number;
+  };
+}
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -65,11 +112,13 @@ export default function PaymentPage() {
         const json = await res.json();
         if (!mounted) return;
         setOrder(json?.order ?? null);
-      } catch (err: any) {
-        if (err?.name === "AbortError") return;
+      } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") return;
         console.error("Fetch order error:", err);
         if (!mounted) return;
-        setOrderError(err?.message ?? "Failed to fetch order");
+        setOrderError(
+          err instanceof Error ? err.message : "Failed to fetch order"
+        );
         setOrder(null);
       } finally {
         if (!mounted) return;
@@ -148,8 +197,8 @@ export default function PaymentPage() {
           // Note: in many flows the app won't reach the next line because the browser has navigated away.
           router.push(`/orders/${orderId}`);
         }
-      } catch (err: any) {
-        if (err?.name === "AbortError") return;
+      } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") return;
         console.error("Payment init error:", err);
         if (!mounted) return;
         setError("Failed to process payment. Please try again.");

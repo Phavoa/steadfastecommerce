@@ -146,7 +146,7 @@ const VerifyPaymentPage = () => {
     };
 
     verifyPayment();
-  }, [payStackReference, router]);
+  }, [payStackReference, router, clearCart]);
 
   return (
     <div className="container mx-auto p-4">

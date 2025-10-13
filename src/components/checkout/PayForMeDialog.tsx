@@ -10,13 +10,24 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 
+interface CartItem {
+  productId: string;
+  title: string;
+  price: number;
+  image: string;
+  quantity: number;
+  wattage?: string;
+  color?: string;
+  description?: string;
+}
+
 export default function PayForMeDialog({
   cartItems,
   isLoading,
   paymentLink,
   onPaymentClick,
 }: {
-  cartItems: any[];
+  cartItems: CartItem[];
   isLoading: boolean;
   paymentLink: string;
   onPaymentClick: () => void;

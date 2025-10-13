@@ -27,7 +27,7 @@ interface CartItem {
   description?: string;
 }
 
-interface ApiResponse<T = any> {
+interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data: T | null;
@@ -44,14 +44,29 @@ interface Coupon {
   description: string;
 }
 
+interface ShippingDetails {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  note?: string;
+}
+
+interface DeliveryInfo {
+  id?: number;
+  fee?: number | string;
+  city?: string;
+}
+
 interface OrderItemsProps {
   selectedState: string;
   selectedCity: string;
   pickupLocation: string | null;
   deliveryFee: string;
   deliveryDuration: string;
-  shippingDetails: any;
-  deliveryInfo?: any; // added to match usage in the component
+  shippingDetails: ShippingDetails;
+  deliveryInfo?: DeliveryInfo;
 }
 
 // Free shipping threshold (per your requirement: free shipping when >= ₦100,000)

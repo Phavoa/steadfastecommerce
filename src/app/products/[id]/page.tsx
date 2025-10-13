@@ -93,7 +93,6 @@ export default function ProductDetailPage() {
     // isAdded => any cart item for this product
     const any = cartItems.some((ci) => ci.productId === product.productId);
     setIsAdded(any);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, cartItems]);
 
   // ---------- Derived ----------

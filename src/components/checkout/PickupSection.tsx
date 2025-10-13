@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Select from "react-select";
 
 type PickupSectionProps = {
@@ -141,6 +141,21 @@ export const PickupSection = ({
     return () => controller.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedState]);
+  const persistPickup = useCallback(
+    (pickup: string | PickupOption | null) => {
+      if (!selectedState) return;
+      if (!pickup) {
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+      const payload: StoredPickupData = {
+        state: selectedState,
+        pickup: typeof pickup === "string" ? pickup : pickup,
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    },
+    [selectedState]
+  );
 
   useEffect(() => {
     if (isLagos && deliveryInfo && currentZone) {
@@ -159,6 +174,7 @@ export const PickupSection = ({
     currentZone,
     onPickupSelect,
     onDeliveryInfoChange,
+    persistPickup,
   ]);
 
   console.log(deliveryInfo);
@@ -229,19 +245,6 @@ export const PickupSection = ({
   const pickupOptions: PickupOption[] = (deliveryInfo?.pickups || []).map(
     (p) => ({ value: p, label: p })
   );
-
-  const persistPickup = (pickup: string | PickupOption | null) => {
-    if (!selectedState) return;
-    if (!pickup) {
-      localStorage.removeItem(STORAGE_KEY);
-      return;
-    }
-    const payload: StoredPickupData = {
-      state: selectedState,
-      pickup: typeof pickup === "string" ? pickup : pickup,
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-  };
 
   // When user picks from dropdown, include the full zone in onPickupSelect and update parent delivery info
   const handlePickupChange = (value: PickupOption | null) => {

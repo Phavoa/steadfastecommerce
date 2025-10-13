@@ -237,7 +237,7 @@ export default function OrderDetailsPage({
 
         setOrder(loadedOrder);
       } catch (err) {
-        if ((err as any).name === "AbortError") return;
+        if (err instanceof Error && err.name === "AbortError") return;
         setError(err instanceof Error ? err.message : "Failed to fetch order");
       } finally {
         setLoading(false);
@@ -325,7 +325,6 @@ export default function OrderDetailsPage({
                 variant="outline"
                 onClick={() => setIsRatingModalOpen(true)}
                 className="text-[#184193] flex items-center gap-1"
-                rounded={true}
               >
                 Leave a Rating
                 <Plus className="text-[#184193] w-5 h-5" />

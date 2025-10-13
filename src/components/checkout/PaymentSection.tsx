@@ -2,12 +2,26 @@
 
 import OrderItems from "../cart/OrderItems";
 
+interface ShippingDetails {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  note?: string;
+}
+
+interface PickupLocation {
+  value?: string;
+  label?: string;
+}
+
 type PaymentSectionProps = {
-  shippingDetails: any;
+  shippingDetails: ShippingDetails;
   pickupLocation: {
     state: string;
     city: string;
-    location: any;
+    location: PickupLocation | string;
   };
   deliveryInfo: ApiZone | null;
 };
@@ -41,7 +55,7 @@ export const PaymentSection = ({
         pickupLocation={pickupLocationValue}
         deliveryFee={String(deliveryInfo?.fee || "")}
         deliveryDuration={deliveryInfo?.duration || ""}
-        deliveryInfo={deliveryInfo}
+        deliveryInfo={deliveryInfo || undefined}
         shippingDetails={shippingDetails}
       />
     </>
