@@ -46,7 +46,7 @@ const ReturnProgressBar: React.FC<ReturnProgressProps> = ({
     }, 600); // match animation duration
 
     return () => clearTimeout(timeout);
-  }, [returnStatus]);
+  }, [returnStatus, currentIndex]);
 
   return (
     <div

@@ -235,11 +235,11 @@ export default function Header({
           role="search"
         >
           <div className="w-full max-w-2xl">
-            <div className="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden">
+            <div className="flex items-center bg-white border border-gray-200 rounded-2xl overflow-hidden">
               <button
                 type="submit"
                 aria-label="Search"
-                className="px-4 py-3 bg-white hover:bg-gray-50 border-r border-gray-200"
+                className="px-4 py-2 bg-white hover:bg-gray-50 border-r border-gray-200"
               >
                 <Search size={18} color="#99a1af" />
               </button>
@@ -247,7 +247,7 @@ export default function Header({
                 aria-label="Search products"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 px-4 py-3 text-sm placeholder-gray-400 outline-none"
+                className="flex-1 px-4 py-2 text-sm placeholder-gray-400 outline-none"
                 placeholder="Search here ..."
               />
             </div>
