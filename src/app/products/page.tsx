@@ -177,6 +177,7 @@ function ProductsPageContent() {
                         src={cat.image_url}
                         alt={cat.description}
                         fill
+                        unoptimized
                         className="rounded-full"
                       />
                     </div>

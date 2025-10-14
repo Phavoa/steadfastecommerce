@@ -90,6 +90,22 @@ export const authApiSlice = createApi({
         method: "GET",
       }),
     }),
+    updateProfile: builder.mutation<
+      AuthResponse,
+      {
+        first_name: string;
+        last_name: string;
+        email: string;
+        phone_number: string;
+        address: string;
+      }
+    >({
+      query: (body) => ({
+        url: "/api/auth/update-profile",
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -103,4 +119,5 @@ export const {
   useVerifyAccountMutation,
   useUpdateLastActiveMutation,
   useVerifyPadiCodeQuery,
+  useUpdateProfileMutation,
 } = authApiSlice;

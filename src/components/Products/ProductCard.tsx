@@ -89,8 +89,8 @@ export default function ProductCard({
 
   return (
     <article
-      className={`bg-white rounded-xl hover-shadow-sm overflow-hidden ${
-        isGrid && index % 2 === 1 ? "mt-10 md:mt-0" : ""
+      className={`bg-white rounded-xl hover-shadow-sm overflow-hidden  ${
+        isGrid && index % 2 === 1 ? "mt-5 md:mt-0" : ""
       }`}
       onClick={() => router.push(`/products/${p.productId}`)}
     >

@@ -154,7 +154,7 @@ export default function Header({
                       <DropdownMenuLabel>Signed in</DropdownMenuLabel>
 
                       <DropdownMenuItem
-                        onClick={() => router.push("/account/profile")}
+                        onClick={() => router.push("/profile")}
                         className="flex items-center gap-2"
                       >
                         <UserCheck size={16} />
@@ -195,7 +195,7 @@ export default function Header({
             </>
           )}
 
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setIsCartOpen(true)}
               aria-label="Cart"
@@ -208,7 +208,7 @@ export default function Header({
                 {cartCount}
               </span>
             )}
-          </div>
+          </div> */}
 
           <div className="relative hidden md:block">
             <button

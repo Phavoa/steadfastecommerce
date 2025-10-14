@@ -94,7 +94,7 @@ export default function ProductGrid({
 
       <div
         className={clsx(
-          "grid gap-2",
+          "grid gap-x-1",
           // mobile columns (from map) — these are concrete classes Tailwind can detect at build time
           gridColsMap[safeMobileGridSize],
           // responsive behaviour uses static classes so Tailwind picks them up too

@@ -169,7 +169,7 @@ export default function MobileNav() {
       router.push("/cart");
     } else if (id === "account") {
       if (isAuthenticated) {
-        router.push("/account/profile");
+        router.push("/profile");
       } else {
         router.push("/auth/login");
       }
@@ -198,7 +198,7 @@ export default function MobileNav() {
             id="category"
             label="Category"
             active={active === "category"}
-            onClick={() => router.push("/products")}
+            onClick={() => router.push("/category")}
           >
             <BagIcon active={active === "category"} />
           </NavItem>
@@ -212,7 +212,7 @@ export default function MobileNav() {
             <div className="relative">
               <ShoppingCartIcon size={24} />
               {isClient && cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#E94B1C] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="absolute -top-1 -right-2.5 bg-[#E94B1C] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
