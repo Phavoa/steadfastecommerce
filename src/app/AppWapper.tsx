@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastProvider } from "@/components/ui/toast";
 import { AuthProvider } from "@/contexts/AuthContext";
+import MobileNav from "@/components/shared/MobileNav";
 
 const AppWapper = ({ children }: { children: React.ReactNode }) => {
   const [isClient, setIsClient] = useState(false);
@@ -28,7 +29,12 @@ const AppWapper = ({ children }: { children: React.ReactNode }) => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AuthProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            {children}
+            <div className="w-full h-20" />
+
+            <MobileNav />
+          </ToastProvider>
         </AuthProvider>
       </PersistGate>
     </Provider>

@@ -80,8 +80,11 @@ const ClientPage = () => {
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
   return (
-    <div className="">
-      <Header onCategoryClick={setShowMegaMenu} />
+    <div className="mt-24">
+      <div className="fixed inset-0  z-50">
+        <Header onCategoryClick={setShowMegaMenu} />
+      </div>
+
       {showMegaMenu ? (
         <div ref={megaMenuRef}>
           <MegaMenuPage onClose={() => setShowMegaMenu(false)} />
@@ -176,9 +179,6 @@ const ClientPage = () => {
           <p className="text-gray-500">No products available</p>
         </div>
       )}
-      <div className="w-full h-20" />
-
-      <MobileNav />
     </div>
   );
 };
