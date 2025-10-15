@@ -34,7 +34,7 @@ export default function ProductSlider({
   }
 
   return (
-    <section className="md:hidden max-w-[1300px] mx-auto px-4 md:px-6 pb-4">
+    <section className="md:hidden max-w-[1300px] mx-auto px-2 md:px-6 pb-4">
       <ProductGridHeader title={title} />
 
       <Swiper

@@ -8,7 +8,7 @@ export default function ProductGridHeader({
   return (
     <div className="flex items-center justify-between mb-4 md:mb-6">
       <h2 className="font-medium text-gray-800">{title}</h2>
-      <a
+      {/* <a
         href="#"
         className="text-sm text-gray-600 flex items-center gap-2 hover:text-gray-900"
       >
@@ -29,7 +29,7 @@ export default function ProductGridHeader({
             strokeLinejoin="round"
           />
         </svg>
-      </a>
+      </a> */}
     </div>
   );
 }

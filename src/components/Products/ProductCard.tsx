@@ -108,7 +108,7 @@ export default function ProductCard({
         </div>
       </div>
 
-      <div className="relative mt-3 p-2">
+      <div className="relative p-2">
         {/* <div className="flex items-center gap-1 mb-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <svg
@@ -127,8 +127,10 @@ export default function ProductCard({
           ))}
         </div> */}
 
-        <p className="text-[10px] text-[#184193] mb-1">{p.category}</p>
-        <h3 className="text-sm text-gray-800 truncate mb-1">{p.title}</h3>
+        <p className="text-[10px] text-[#184193]">{p.category}</p>
+        <h3 className="text-sm text-gray-800 max-w-[80%] truncate">
+          {p.title}
+        </h3>
 
         <div className="flex items-center justify-between">
           <div>
