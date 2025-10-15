@@ -6,7 +6,7 @@ export default function ProductGridHeader({
   title: string;
 }) {
   return (
-    <div className="flex items-center justify-between mb-4 md:mb-6">
+    <div className="flex items-center justify-between mb-2 md:mb-4 md:mb-6">
       <h2 className="font-medium text-gray-800">{title}</h2>
       {/* <a
         href="#"

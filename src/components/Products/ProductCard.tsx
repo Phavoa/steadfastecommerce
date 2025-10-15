@@ -3,13 +3,13 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { Product } from "@/types/product";
 import VariationSelector from "./VariationSelector";
 import { useAppDispatch } from "@/hooks/redux";
 import { addToCart } from "@/slices/cartSlice";
 import { useToast } from "@/components/ui/toast";
-import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -28,7 +28,6 @@ export default function ProductCard({
 }: ProductCardProps) {
   const dispatch = useAppDispatch();
   const { showToast } = useToast();
-  const router = useRouter();
 
   const handleAddToCart = () => {
     if (p.is_variable_product) {
@@ -88,28 +87,28 @@ export default function ProductCard({
   };
 
   return (
-    <article
-      className={`bg-white rounded-xl hover-shadow-sm overflow-hidden  ${
-        isGrid && index % 2 === 1 ? "mt-5 md:mt-0" : ""
-      }`}
-      onClick={() => router.push(`/products/${p.productId}`)}
-    >
-      <div className="relative rounded-lg overflow-hidden bg-gray-100">
-        <div className="w-full relative aspect-[11/10] md:h-[220px]">
-          <Image
-            src={(p.images && p.images[0]) || "/placeholder.jpg"}
-            alt={p.title}
-            fill
-            unoptimized
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-            style={{ objectFit: "cover" }}
-            className="rounded-lg"
-          />
+    <Link href={`/products/${p.productId}`}>
+      <article
+        className={`bg-white rounded-xl hover-shadow-sm overflow-hidden cursor-pointer ${
+          isGrid && index % 2 === 1 ? "mt-5 md:mt-0" : ""
+        }`}
+      >
+        <div className="relative rounded-lg overflow-hidden bg-gray-100">
+          <div className="w-full relative aspect-[11/10] md:h-[220px]">
+            <Image
+              src={(p.images && p.images[0]) || "/placeholder.jpg"}
+              alt={p.title}
+              fill
+              unoptimized
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+              style={{ objectFit: "cover" }}
+              className="rounded-lg"
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="relative p-2">
-        {/* <div className="flex items-center gap-1 mb-2">
+        <div className="relative p-2">
+          {/* <div className="flex items-center gap-1 mb-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <svg
               key={i}
@@ -127,61 +126,62 @@ export default function ProductCard({
           ))}
         </div> */}
 
-        <p className="text-[10px] text-[#184193]">{p.category}</p>
-        <h3 className="text-sm text-gray-800 max-w-[80%] truncate">
-          {p.title}
-        </h3>
+          <p className="text-[10px] text-[#184193]">{p.category}</p>
+          <h3 className="text-xs md:text-sm text-gray-800 max-w-[80%] truncate">
+            {p.title}
+          </h3>
 
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-semibold text-[#E94B1C]">
-              ₦{(p.effective_price || 0).toLocaleString()}
-            </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-semibold text-[#E94B1C]">
+                ₦{(p.effective_price || 0).toLocaleString()}
+              </p>
+            </div>
+          </div>
+
+          {/* Action buttons placed at the right, one top, one bottom */}
+          <div className="absolute top-0 right-1 h-full flex flex-col justify-between items-end px-1 z-10 py-2">
+            {/* Top: wishlist */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleWishlist(p.productId);
+              }}
+              aria-label={
+                isWishlisted ? "Remove from wishlist" : "Add to wishlist"
+              }
+              className=" hover:scale-105 transition-transform ring-0 focus:outline-none focus:ring-2 focus:ring-offset-2 "
+              title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            >
+              {isWishlisted ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
+                  <path
+                    d="M12 21s-7-4.35-9.07-6.42A5.5 5.5 0 0112 3.5 5.5 5.5 0 0121.07 14.6 27.9 27.9 0 0112 21z"
+                    fill="currentColor"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  />
+                </svg>
+              )}
+            </button>
+
+            {/* Bottom: add to cart */}
+            {renderAddToCartButton()}
           </div>
         </div>
-
-        {/* Action buttons placed at the right, one top, one bottom */}
-        <div className="absolute top-0 right-1 h-full flex flex-col justify-between items-end px-1 z-10 py-2">
-          {/* Top: wishlist */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleWishlist(p.productId);
-            }}
-            aria-label={
-              isWishlisted ? "Remove from wishlist" : "Add to wishlist"
-            }
-            className=" hover:scale-105 transition-transform ring-0 focus:outline-none focus:ring-2 focus:ring-offset-2 "
-            title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          >
-            {isWishlisted ? (
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
-                <path
-                  d="M12 21s-7-4.35-9.07-6.42A5.5 5.5 0 0112 3.5 5.5 5.5 0 0121.07 14.6 27.9 27.9 0 0112 21z"
-                  fill="currentColor"
-                />
-              </svg>
-            ) : (
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden
-              >
-                <path
-                  d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                />
-              </svg>
-            )}
-          </button>
-
-          {/* Bottom: add to cart */}
-          {renderAddToCartButton()}
-        </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }

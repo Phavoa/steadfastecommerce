@@ -80,8 +80,8 @@ const ClientPage = () => {
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
   return (
-    <div className="mt-24">
-      <div className="fixed inset-0  z-50">
+    <div className="mt-24 ">
+      <div className="fixed top-0 right-0 left-0  z-50">
         <Header onCategoryClick={setShowMegaMenu} />
       </div>
 
