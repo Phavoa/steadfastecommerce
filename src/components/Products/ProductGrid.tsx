@@ -89,7 +89,7 @@ export default function ProductGrid({
   }, [handleIntersection, isInfiniteScroll]);
 
   return (
-    <section className="max-w-[1300px] mx-auto px-2 md:px-6 py-2 md:py-6">
+    <section className="max-w-[1300px] mx-auto px-2 md:px-6  md:py-6">
       {showHead ? <ProductGridHeader title={title} /> : null}
 
       <div

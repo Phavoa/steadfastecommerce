@@ -90,7 +90,7 @@ export default function ProductCard({
     <Link href={`/products/${p.productId}`}>
       <article
         className={`bg-white rounded-xl hover-shadow-sm overflow-hidden cursor-pointer ${
-          isGrid && index % 2 === 1 ? "mt-5 md:mt-0" : ""
+          isGrid && index % 2 === 1 ? "mt-4 md:mt-0" : ""
         }`}
       >
         <div className="relative rounded-lg overflow-hidden bg-gray-100">
