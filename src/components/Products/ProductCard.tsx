@@ -87,7 +87,7 @@ export default function ProductCard({
   };
 
   return (
-    <Link href={`/products/${p.productId}`}>
+    <Link href={`/products/${p.productId}`} className="">
       <article
         className={`bg-white rounded-xl hover-shadow-sm overflow-hidden cursor-pointer ${
           isGrid && index % 2 === 1 ? "mt-4 md:mt-0" : ""
@@ -107,7 +107,7 @@ export default function ProductCard({
           </div>
         </div>
 
-        <div className="relative p-2">
+        <div className="relative px-2">
           {/* <div className="flex items-center gap-1 mb-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <svg
