@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import Cookies from "js-cookie";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/hooks/useCart";
 
@@ -86,7 +85,7 @@ export default function PaymentPage() {
       setLoadingOrder(true);
       setOrderError(null);
 
-      const token = Cookies.get("token");
+      const token = getToken();
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),

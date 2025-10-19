@@ -162,7 +162,7 @@ export default function Header({
                       </DropdownMenuItem>
 
                       <DropdownMenuItem
-                        onClick={() => router.push("/account/orders")}
+                        onClick={() => router.push("/orders")}
                         className="flex items-center gap-2"
                       >
                         <ClipboardList size={16} />
@@ -195,7 +195,7 @@ export default function Header({
             </>
           )}
 
-          {/* <div className="relative">
+          <div className="hidden md:block relative">
             <button
               onClick={() => setIsCartOpen(true)}
               aria-label="Cart"
@@ -208,7 +208,7 @@ export default function Header({
                 {cartCount}
               </span>
             )}
-          </div> */}
+          </div>
 
           <div className="relative hidden md:block">
             <button

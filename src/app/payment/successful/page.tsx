@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { TopBanner } from "@/components/layout/TopBanner";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
+import Header from "@/components/shared/Header";
+import { Footer } from "@/components/shared/Footer";
 
 export default function PaymentSuccessfulPage() {
   const router = useRouter();

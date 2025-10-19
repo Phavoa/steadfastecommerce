@@ -11,9 +11,6 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 
-import { TopBanner } from "@/components/layout/TopBanner";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Pagination } from "@/components/common/Pagination";
 import {
@@ -23,6 +20,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import Header from "@/components/shared/Header";
+import { Footer } from "@/components/shared/Footer";
 
 type Order = {
   image: string;
@@ -240,6 +240,8 @@ const OrderCard = ({ order }: { order: Order }) => {
 };
 
 export default function OrderHistory() {
+  const { getToken } = useAuth();
+
   // UI / pagination
   const [page, setPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(10);
@@ -266,18 +268,6 @@ export default function OrderHistory() {
     { label: "Profile", href: "/profile" },
     { label: "Order History" },
   ];
-
-  // get token from cookies (tries several common cookie names)
-  const getToken = useCallback(() => {
-    if (typeof window === "undefined") return null;
-    const names = ["token", "access_token", "auth_token", "jwt"];
-    for (const n of names) {
-      const v = Cookies.get(n);
-      if (v) return v;
-    }
-    // fallback to localStorage for backward compatibility
-    return localStorage.getItem("token") || null;
-  }, []);
 
   const fetchOrders = useCallback(
     async (opts?: {
@@ -422,7 +412,6 @@ export default function OrderHistory() {
 
   return (
     <>
-      <TopBanner theme="dark" />
       <Header />
       <main className="min-h-screen">
         <div className="container mx-auto px-4 py-10">

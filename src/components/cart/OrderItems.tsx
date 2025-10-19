@@ -10,8 +10,7 @@ import { useRouter } from "next/navigation";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useCart } from "@/hooks/useCart";
 import { CouponHelper } from "@/lib/coupons";
-// import { useAuth } from "@/hooks/useAuth";
-const useAuth = () => ({ getToken: () => null });
+import { useAuth } from "@/contexts/AuthContext";
 import PayForMeDialog from "../checkout/PayForMeDialog";
 import { useVerifiedPromo } from "@/hooks/useVerifiedPromo";
 import { Button } from "../ui/button";
@@ -181,7 +180,7 @@ export default function OrderItems({
 
   // Create order and redirect to payment
   const handlePayment = useCallback(async () => {
-    const token = Cookies.get("token");
+    const token = getToken();
 
     if (cartItems.length === 0) {
       alert("Cart is empty");
@@ -199,6 +198,7 @@ export default function OrderItems({
         "Content-Type": "application/json",
       };
       if (token) headers["Authorization"] = `Bearer ${token}`;
+      console.log(token);
 
       const payload = {
         ...(token ? {} : { tempuser: true }),
