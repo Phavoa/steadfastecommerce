@@ -12,7 +12,6 @@ import { RootState } from "@/lib/store/store";
 import Banner from "./HomeScreen/Banner";
 import { useGetExploreProductsQuery } from "@/slices/products/productApiSlice";
 import { fetchProducts } from "@/lib/api/products";
-import MobileNav from "./shared/MobileNav";
 import { Product } from "@/types/product";
 
 const ClientPage = () => {
