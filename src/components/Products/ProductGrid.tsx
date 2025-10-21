@@ -123,11 +123,6 @@ export default function ProductGrid({
       {isInfiniteScroll && hasNextPage && (
         <div ref={loadMoreRef} className="h-4" />
       )}
-
-      <CartButton
-        cartCount={cartCount}
-        onClick={() => alert("Go to cart (demo)")}
-      />
     </section>
   );
 }
