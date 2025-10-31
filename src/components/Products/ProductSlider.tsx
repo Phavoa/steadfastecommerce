@@ -15,12 +15,14 @@ type ProductSliderProp = {
   title: string;
   mobileGridSize?: number;
   products: Product[];
+  showNavigationButtons?: boolean;
 };
 
 export default function ProductSlider({
   title,
   mobileGridSize = 2,
   products,
+  showNavigationButtons = true,
 }: ProductSliderProp) {
   const [wishlist, setWishlist] = useState<Record<number, boolean>>({});
   const [cartCount, setCartCount] = useState(3);
@@ -34,17 +36,26 @@ export default function ProductSlider({
   }
 
   return (
-    <section className="md:hidden max-w-[1300px] mx-auto px-2 md:px-6 md:pb-4 ">
+    <section className="max-w-[1300px] mx-auto px-2 md:px-6 md:pb-4 ">
       <ProductGridHeader title={title} />
 
       <Swiper
         modules={[Navigation, Pagination, FreeMode, A11y]}
         spaceBetween={8}
         slidesPerView={mobileGridSize}
-        navigation={{
-          nextEl: ".custom-next",
-          prevEl: ".custom-prev",
-        }}
+        navigation={
+          showNavigationButtons
+            ? {
+                nextEl: ".custom-next",
+                prevEl: ".custom-prev",
+              }
+            : false
+        }
+        freeMode={true}
+        grabCursor={true}
+        touchEventsTarget="container"
+        touchStartPreventDefault={false}
+        touchMoveStopPropagation={false}
       >
         {products.map((product, index) => (
           <SwiperSlide key={`${product.productId}-${index}`}>
@@ -56,39 +67,43 @@ export default function ProductSlider({
           </SwiperSlide>
         ))}
         {/* <div className="custom-pagination mt-4 flex justify-center mx-auto gap-1"></div> */}
-        <button className="custom-prev absolute top-1/2 left-2 z-10 -translate-y-[80%] rounded-full bg-white p-3 shadow-md hover:bg-gray-100">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-700"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
+        {showNavigationButtons && (
+          <>
+            <button className="custom-prev absolute top-1/2 left-2 z-10 -translate-y-[80%] rounded-full bg-white p-3 shadow-md hover:bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-700"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
 
-        <button className="custom-next absolute top-1/2 right-2 z-10 -translate-y-[70%] rounded-full bg-white p-3 shadow-md hover:bg-gray-100">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-700"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
+            <button className="custom-next absolute top-1/2 right-2 z-10 -translate-y-[70%] rounded-full bg-white p-3 shadow-md hover:bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-700"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </>
+        )}
       </Swiper>
     </section>
   );

@@ -169,7 +169,7 @@ export default function MobileNav() {
       router.push("/cart");
     } else if (id === "account") {
       if (isAuthenticated) {
-        router.push("/profile");
+        router.push("/account");
       } else {
         router.push("/auth/login");
       }

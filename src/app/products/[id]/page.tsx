@@ -17,6 +17,7 @@ import { ProductAddToCart } from "@/components/Products/ProductAddToCart";
 import { RelatedProducts } from "@/components/Products/RelatedProducts";
 import { useCart } from "@/hooks/useCart";
 import LoadingSkeloton from "./LoadingSkeloton";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -290,12 +291,19 @@ export default function ProductDetailPage() {
       </div>
     );
   }
-
+  console.log("Rendering product page for:", product);
   return (
     <>
-      <Header isProductPage />
-      <main className="container mx-auto px-4 pt-8">
-        <div className="flex flex-col md:flex-row gap-8 mt-8">
+      <Header isProductPage showSearchbar={false} />
+      <main className="container mx-auto px-4">
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Products", href: "/products" },
+            { label: product?.name || "Product Details" },
+          ]}
+        />
+        <div className="flex flex-col md:flex-row md:gap-8 mt-8">
           <ProductImageGallery
             image_urls={product.image_urls}
             name={product.name}

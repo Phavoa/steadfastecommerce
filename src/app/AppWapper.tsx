@@ -33,7 +33,7 @@ const AppWapper = ({ children }: { children: React.ReactNode }) => {
             {children}
             <div className="w-full h-20" />
 
-            {/* <MobileNav /> */}
+            <MobileNav />
           </ToastProvider>
         </AuthProvider>
       </PersistGate>

@@ -18,7 +18,7 @@ import FilterSidebar, {
   FilterOptions,
 } from "@/components/Products/FilterSidebar";
 
-function ProductsPageContent() {
+function SearchPageContent() {
   const searchParams = useSearchParams();
   const categories = useSelector(
     (state: RootState) => state.categories.categories
@@ -51,8 +51,9 @@ function ProductsPageContent() {
   const updated_before = searchParams.get("updated_before");
   const per_page = searchParams.get("per_page");
 
+  // Use q as search query
   if (q) params.q = q;
-  if (cat) params.category = cat;
+  if (cat && cat !== "All Categories") params.category = cat;
   if (category) params.category = category;
   if (subcat) params.subcat = subcat;
   if (has_discount) params.has_discount = has_discount === "true";
@@ -141,66 +142,18 @@ function ProductsPageContent() {
     );
   }
 
-  const categoryId = searchParams.get("category");
+  const categoryId = searchParams.get("category") || cat;
   const subcatParam = searchParams.get("subcat");
-  const searchQuery = searchParams.get("q");
 
-  let title = "Products";
-  if (searchQuery) {
-    title = `Search results for "${searchQuery}"`;
-  } else if (categoryId) {
-    const category = categories.find((cat) => cat.id === categoryId);
-    title = category ? category.name : categoryId;
-  } else if (subcatParam) {
-    // Find subcategory name by ID
-    let subcategoryName = subcatParam;
-    for (const cat of categories) {
-      const sub = cat.subcategories.find((sub) => sub.id === subcatParam);
-      if (sub) {
-        subcategoryName = sub.name;
-        break;
-      }
-    }
-    title = subcategoryName;
-  }
+  const title = q ? `Search results for "${q}"` : "Search";
 
   return (
     <div className="min-h-screen">
       <Header isProductPage={true} />
       <div className="max-w-7xl mx-auto px-4 pt-4 pb-8">
-        <p className="text-lg font-medium ">Shop by Categories</p>
-
-        <nav className="hidden md:block bg-white overflow-x-auto no-scrollbar relative z-[10] px-6">
-          <div className="px-6 relative min-h-20">
-            <ul className="absolute top-0 left-4 right-4 md:relative flex justify-start items-center gap-2 md:gap-6 py-3 text-sm text-gray-700">
-              {categories.map((cat) => (
-                <li key={cat.id} className="list-none relative rounded-3xl">
-                  <Link
-                    href={`/products?category=${cat.id}`}
-                    className="px-4 py-3 rounded-md whitespace-nowrap hover:bg-gray-50 hover:text-gray-900 transition-colors"
-                  >
-                    <div className="relative w-40 h-30">
-                      <Image
-                        src={cat.image_url}
-                        alt={cat.description}
-                        fill
-                        unoptimized
-                        className="rounded-full"
-                      />
-                    </div>
-
-                    <p className="text-center mt-2">{cat?.name}</p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 capitalize">
-              {title.replace(/-/g, " ")}
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
             <p className="text-gray-600 mt-2">
               {displayProducts.length} product
               {displayProducts.length !== 1 ? "s" : ""} found
@@ -260,10 +213,10 @@ function ProductsPageContent() {
   );
 }
 
-export default function ProductsPage() {
+export default function SearchPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ProductsPageContent />
+      <SearchPageContent />
     </Suspense>
   );
 }

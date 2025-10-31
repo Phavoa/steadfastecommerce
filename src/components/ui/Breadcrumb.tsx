@@ -1,3 +1,7 @@
+"use client";
+
+import Link from "next/link";
+
 interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -19,11 +23,11 @@ export const Breadcrumb = ({ items, className }: BreadcrumbProps) => {
         <span key={index} className="flex items-center">
           {index > 0 && <span className="mx-2">/</span>}
           {item.href ? (
-            <a href={item.href} className="hover:text-gray-900">
+            <Link href={item.href} className="hover:text-gray-900">
               {item.label}
-            </a>
+            </Link>
           ) : (
-            <span className="text-gray-900">{item.label}</span>
+            <span className="text-[#E94B1C]">{item.label}</span>
           )}
         </span>
       ))}

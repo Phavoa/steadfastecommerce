@@ -123,11 +123,13 @@ const ClientPage = () => {
                 title={"New Arrival"}
                 mobileGridSize={3}
                 products={featuredProducts}
+                showNavigationButtons={false}
               />
               <ProductSlider
                 title={"Top Picks"}
                 mobileGridSize={3}
                 products={featuredProducts}
+                showNavigationButtons={false}
               />
             </>
           ) : (
@@ -147,8 +149,18 @@ const ClientPage = () => {
             </>
           ) : featuredProducts.length > 0 ? (
             <>
-              <ProductGrid title={"New Arrival"} products={featuredProducts} />
-              <ProductGrid title={"Top Picks"} products={featuredProducts} />
+              <ProductSlider
+                title={"New Arrival"}
+                mobileGridSize={4}
+                products={featuredProducts}
+                showNavigationButtons={true}
+              />
+              <ProductSlider
+                title={"Top Picks"}
+                mobileGridSize={4}
+                products={featuredProducts}
+                showNavigationButtons={true}
+              />
             </>
           ) : (
             <div className="text-center py-12">

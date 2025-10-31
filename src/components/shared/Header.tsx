@@ -42,6 +42,7 @@ export default function Header({
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All Categories");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [wishlistCount, setWishlistCount] = useState(3);
   const [isClient, setIsClient] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -74,8 +75,8 @@ export default function Header({
     e?.preventDefault();
     const params = new URLSearchParams();
     if (query) params.set("q", query);
-    if (category && category !== "All Categories") params.set("cat", category);
-    router.push(`/search?${params.toString()}`);
+    if (selectedCategory) params.set("category", selectedCategory);
+    router.push(`/products?${params.toString()}`);
   }
 
   function handleLogout() {
@@ -109,13 +110,34 @@ export default function Header({
         >
           <div className="w-full max-w-2xl">
             <div className="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden">
-              <button
-                type="submit"
-                aria-label="Search"
-                className="px-4 py-3 bg-white hover:bg-gray-50 border-r border-gray-200"
-              >
-                <Search size={18} color="#99a1af" />
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    aria-label="Select category"
+                    className="px-4 py-3 bg-white hover:bg-gray-50 border-r border-gray-200 text-sm"
+                  >
+                    {selectedCategory
+                      ? categories.find((cat) => cat.id === selectedCategory)
+                          ?.name
+                      : "All Categories"}
+                    <ChevronDown size={16} className="ml-1" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuItem onClick={() => setSelectedCategory(null)}>
+                    All Categories
+                  </DropdownMenuItem>
+                  {categories.map((cat) => (
+                    <DropdownMenuItem
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                    >
+                      {cat.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <input
                 aria-label="Search products"
                 value={query}
@@ -123,6 +145,13 @@ export default function Header({
                 className="flex-1 px-4 py-3 text-sm placeholder-gray-400 outline-none"
                 placeholder="Search here ..."
               />
+              <button
+                type="submit"
+                aria-label="Search"
+                className="px-4 py-3 bg-white hover:bg-gray-50 border-l border-gray-200"
+              >
+                <Search size={18} color="#99a1af" />
+              </button>
             </div>
           </div>
         </form>
@@ -236,11 +265,39 @@ export default function Header({
         >
           <div className="w-full max-w-2xl">
             <div className="flex items-center bg-white border border-gray-200 rounded-2xl overflow-hidden">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    aria-label="Select category"
+                    className="px-3 py-2 bg-white hover:bg-gray-50 border-r border-gray-200 text-sm"
+                  >
+                    {selectedCategory
+                      ? categories.find((cat) => cat.id === selectedCategory)
+                          ?.name
+                      : "All"}
+                    <ChevronDown size={14} className="ml-1" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuItem onClick={() => setSelectedCategory(null)}>
+                    All Categories
+                  </DropdownMenuItem>
+                  {categories.map((cat) => (
+                    <DropdownMenuItem
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                    >
+                      {cat.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <input
                 aria-label="Search products"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 ml-2 px-4 py-2 text-sm placeholder-gray-400 outline-none"
+                className="flex-1 px-4 py-2 text-sm placeholder-gray-400 outline-none"
                 placeholder="Search here ..."
               />
               <button

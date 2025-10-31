@@ -35,8 +35,6 @@ export const ProductTabs = ({ product }: ProductTabsProps) => {
     "description"
   );
 
-  console.log(product);
-
   return (
     <div className="mt-16">
       <div className="border-b border-gray-200">
@@ -45,7 +43,7 @@ export const ProductTabs = ({ product }: ProductTabsProps) => {
             onClick={() => setActiveTab("description")}
             className={`pb-4 font-medium ${
               activeTab === "description"
-                ? "text-[#184193] border-b-2 border-[#184193]"
+                ? "text-[#E94B1C] border-b-2 border-[#E94B1C]"
                 : "text-gray-500"
             }`}
           >
@@ -55,7 +53,7 @@ export const ProductTabs = ({ product }: ProductTabsProps) => {
             onClick={() => setActiveTab("reviews")}
             className={`pb-4 font-medium ${
               activeTab === "reviews"
-                ? "text-[#184193] border-b-2 border-[#184193]"
+                ? "text-[#E94B1C] border-b-2 border-[#E94B1C]"
                 : "text-gray-500"
             }`}
           >
