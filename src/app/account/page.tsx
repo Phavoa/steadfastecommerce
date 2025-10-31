@@ -187,7 +187,7 @@ export default function MobileProfile() {
                 className="text-[16px] font-medium"
                 style={{ color: tokens.theme.text_color_primary }}
               >
-                {user.username ? `${user.username}` : "Guest"}
+                {user ? `${user.username}` : "Guest"}
               </div>
             </div>
           </div>

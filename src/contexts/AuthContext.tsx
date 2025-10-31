@@ -17,6 +17,7 @@ interface User {
   city?: string;
   state?: string;
   address?: string;
+  username?: string;
 }
 
 interface AuthContextType {
